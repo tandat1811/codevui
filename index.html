@@ -1,0 +1,273 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Valentine 2026 - Gửi Người Tôi Thương</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #000000; /* Màu đỏ thẫm Valentine */
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            transition: background 2s;
+        }
+
+        canvas {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+        }
+        #fireworks-canvas { z-index: 1; }
+        #pinkboard { z-index: 2; }
+
+        #welcome-screen {
+            position: absolute;
+            z-index: 100;
+            text-align: center;
+            color: white;
+            transition: opacity 1s ease;
+            background: rgba(134, 95, 129, 0.7);
+            padding: 40px;
+            border-radius: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 182, 193, 0.3);
+        }
+
+        #welcome-screen h1 {
+            font-size: 3rem;
+            color: #ffb6c1;
+            text-shadow: 0 0 20px #ff0000;
+            margin: 0 0 20px 0;
+        }
+
+        #start-btn {
+            padding: 15px 50px;
+            font-size: 1.5rem;
+            background: linear-gradient(45deg, #ff1493, #ff69b4);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 0 30px rgba(255, 20, 147, 0.6);
+            transition: 0.3s;
+        }
+
+        #start-btn:hover { transform: scale(1.1); box-shadow: 0 0 50px #ff1493; }
+
+        #timer {
+            color: #ff69b4;
+            font-size: 120px;
+            font-weight: bold;
+            z-index: 10;
+            display: none;
+            text-shadow: 0 0 30px #ff1493;
+            position: absolute;
+        }
+
+        /* Hiệu ứng trái tim nhỏ rơi */
+        .falling-heart {
+            position: absolute;
+            pointer-events: none;
+            animation: fall 5s linear forwards;
+            z-index: 5;
+            font-size: 20px;
+        }
+        @keyframes fall {
+            0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(360deg) translateX(var(--x-drift)); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="fireworks-canvas"></canvas>
+    <canvas id="pinkboard"></canvas>
+
+    <div id="welcome-screen">
+        <h1>Happy Valentine's 2026! ❤️</h1>
+        <p style="font-size: 1.2rem; margin-bottom: 30px;">Dành tặng người xinh đẹp nhất trong lòng tớ...</p>
+        <button id="start-btn">Bấm để nhận quà ✨</button>
+    </div>
+
+    <div id="timer">3</div>
+
+    <script>
+        const fwCanvas = document.getElementById('fireworks-canvas');
+        const fwCtx = fwCanvas.getContext('2d');
+        let fireworksRunning = true;
+        
+        function resizeFw() { fwCanvas.width = window.innerWidth; fwCanvas.height = window.innerHeight; }
+        window.addEventListener('resize', resizeFw); resizeFw();
+
+        // 1. Tạo hiệu ứng trái tim nhỏ rơi
+        function startFallingHearts() {
+            setInterval(() => {
+                const h = document.createElement('div');
+                h.className = 'falling-heart';
+                // Ngẫu nhiên các loại tim khác nhau
+                const hearts = ['❤️', '💖', '💗', '💕', '🌸'];
+                h.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
+                h.style.left = Math.random() * 100 + 'vw';
+                h.style.setProperty('--x-drift', (Math.random() * 100 - 50) + 'px');
+                h.style.opacity = Math.random();
+                h.style.fontSize = (Math.random() * 15 + 10) + 'px';
+                document.body.appendChild(h);
+                setTimeout(() => h.remove(), 5000);
+            }, 300);
+        }
+
+        // 2. PHÁO HOA
+        let fireworks = [], fwParticles = [];
+        class Firework {
+            constructor() {
+                this.x = Math.random() * fwCanvas.width;
+                this.y = fwCanvas.height;
+                this.tx = this.x;
+                this.ty = Math.random() * (fwCanvas.height / 2);
+                this.speed = 3;
+                this.angle = Math.atan2(this.ty - this.y, this.tx - this.x);
+                this.dist = Math.sqrt(Math.pow(this.ty - this.y, 2));
+                this.distT = 0;
+            }
+            update(i) {
+                this.y += Math.sin(this.angle) * this.speed;
+                this.distT = fwCanvas.height - this.y;
+                if (this.distT >= this.dist) {
+                    createFwParticles(this.tx, this.ty);
+                    fireworks.splice(i, 1);
+                }
+            }
+            draw() {
+                fwCtx.beginPath(); fwCtx.arc(this.x, this.y, 2, 0, Math.PI*2);
+                fwCtx.fillStyle = '#ff69b4'; fwCtx.fill();
+            }
+        }
+        function createFwParticles(x, y) {
+            let color = `hsl(${Math.random() * 20 + 340}, 100%, 70%)`;
+            for (let i = 0; i < 30; i++) {
+                fwParticles.push({
+                    x, y, vx: Math.cos(i) * Math.random() * 4, vy: Math.sin(i) * Math.random() * 4,
+                    alpha: 1, color
+                });
+            }
+        }
+        function loopFw() {
+            if (!fireworksRunning) {
+                fwCtx.clearRect(0,0, fwCanvas.width, fwCanvas.height);
+                return;
+            };
+            requestAnimationFrame(loopFw);
+            fwCtx.globalCompositeOperation = 'destination-out';
+            fwCtx.fillStyle = 'rgba(0, 0, 0, 0.2)';
+            fwCtx.fillRect(0, 0, fwCanvas.width, fwCanvas.height);
+            fwCtx.globalCompositeOperation = 'lighter';
+            if (Math.random() < 0.05) fireworks.push(new Firework());
+            fireworks.forEach((f, i) => { f.update(i); f.draw(); });
+            fwParticles.forEach((p, i) => {
+                p.x += p.vx; p.y += p.vy; p.vy += 0.05; p.alpha -= 0.01;
+                if (p.alpha <= 0) fwParticles.splice(i, 1);
+                fwCtx.globalAlpha = p.alpha; fwCtx.fillStyle = p.color;
+                fwCtx.fillRect(p.x, p.y, 2, 2);
+            });
+        }
+        loopFw();
+
+        // 3. LOGIC CHUYỂN CẢNH
+        const startBtn = document.getElementById('start-btn');
+        const welcomeScreen = document.getElementById('welcome-screen');
+        const timerDiv = document.getElementById('timer');
+
+        startBtn.addEventListener('click', () => {
+            document.body.style.background = "#1a0000"; 
+            welcomeScreen.style.opacity = '0';
+            setTimeout(() => {
+                welcomeScreen.style.display = 'none';
+                startCountdown();
+            }, 1000);
+        });
+
+        function startCountdown() {
+            timerDiv.style.display = 'block';
+            let timeLeft = 3;
+            const interval = setInterval(() => {
+                timeLeft--;
+                if (timeLeft > 0) timerDiv.innerText = timeLeft;
+                else {
+                    clearInterval(interval);
+                    timerDiv.style.display = 'none';
+                    fireworksRunning = false;
+                    initHeart();
+                    startFallingHearts();
+                }
+            }, 1000);
+        }
+
+        // 4. TRÁI TIM LỚN Ở GIỮA (Giữ nguyên hiệu ứng hạt)
+        var settings = { particles: { length: 700, duration: 2, velocity: 100, effect: -0.75, size: 30 } };
+        var Point = (function() { function Point(x, y) { this.x = x||0; this.y = y||0; } return Point; })();
+        var Particle = (function() {
+            function Particle() { this.position = new Point(); this.velocity = new Point(); this.acceleration = new Point(); this.age = 0; }
+            Particle.prototype.initialize = function(x, y, dx, dy) { this.position.x = x; this.position.y = y; this.velocity.x = dx; this.velocity.y = dy; this.acceleration.x = dx * settings.particles.effect; this.acceleration.y = dy * settings.particles.effect; this.age = 0; };
+            Particle.prototype.update = function(dt) { this.position.x += this.velocity.x * dt; this.position.y += this.velocity.y * dt; this.velocity.x += this.acceleration.x * dt; this.velocity.y += this.acceleration.y * dt; this.age += dt; };
+            Particle.prototype.draw = function(ctx, img) { 
+                var size = img.width * (1 - Math.pow(this.age / settings.particles.duration - 1, 2));
+                ctx.globalAlpha = 1 - this.age / settings.particles.duration;
+                ctx.drawImage(img, this.position.x - size / 2, this.position.y - size / 2, size, size);
+            };
+            return Particle;
+        })();
+        var ParticlePool = (function() {
+            var particles, firstActive = 0, firstFree = 0, duration = settings.particles.duration;
+            function ParticlePool(length) { particles = new Array(length); for (var i = 0; i < particles.length; i++) particles[i] = new Particle(); }
+            ParticlePool.prototype.add = function(x, y, dx, dy) { particles[firstFree].initialize(x, y, dx, dy); firstFree++; if (firstFree == particles.length) firstFree = 0; if (firstActive == firstFree) firstActive++; if (firstActive == particles.length) firstActive = 0; };
+            ParticlePool.prototype.update = function(dt) { var i; if (firstActive < firstFree) { for (i = firstActive; i < firstFree; i++) particles[i].update(dt); } if (firstFree < firstActive) { for (i = firstActive; i < particles.length; i++) particles[i].update(dt); for (i = 0; i < firstFree; i++) particles[i].update(dt); } while (particles[firstActive].age >= duration && firstActive != firstFree) { firstActive++; if (firstActive == particles.length) firstActive = 0; } };
+            ParticlePool.prototype.draw = function(ctx, img) { var i; if (firstActive < firstFree) { for (i = firstActive; i < firstFree; i++) particles[i].draw(ctx, img); } if (firstFree < firstActive) { for (i = firstActive; i < particles.length; i++) particles[i].draw(ctx, img); for (i = 0; i < firstFree; i++) particles[i].draw(ctx, img); } };
+            return ParticlePool;
+        })();
+
+        function initHeart() {
+            var canvas = document.getElementById('pinkboard');
+            var context = canvas.getContext('2d');
+            var particles = new ParticlePool(settings.particles.length);
+            var particleRate = settings.particles.length / settings.particles.duration;
+            var time;
+            function pointOnHeart(t) { return new Point(160 * Math.pow(Math.sin(t), 3), 130 * Math.cos(t) - 50 * Math.cos(2 * t) - 20 * Math.cos(3 * t) - 10 * Math.cos(4 * t) + 25); }
+            var image = (function() {
+                var canvas = document.createElement('canvas'), context = canvas.getContext('2d');
+                canvas.width = settings.particles.size; canvas.height = settings.particles.size;
+                function to(t) { var p = pointOnHeart(t); p.x = settings.particles.size / 2 + p.x * settings.particles.size / 350; p.y = settings.particles.size / 2 - p.y * settings.particles.size / 350; return p; }
+                context.beginPath(); var t = -Math.PI; var p = to(t); context.moveTo(p.x, p.y);
+                while (t < Math.PI) { t += 0.01; p = to(t); context.lineTo(p.x, p.y); }
+                context.closePath(); context.fillStyle = '#ff1493'; // Màu trái tim chính
+                context.fill();
+                var img = new Image(); img.src = canvas.toDataURL(); return img;
+            })();
+            function render() {
+                requestAnimationFrame(render);
+                var newTime = new Date().getTime() / 1000, dt = newTime - (time || newTime);
+                time = newTime;
+                context.clearRect(0, 0, canvas.width, canvas.height);
+                var amount = particleRate * dt;
+                for (var i = 0; i < amount; i++) {
+                    var pos = pointOnHeart(Math.PI - 2 * Math.PI * Math.random());
+                    var dir = new Point(pos.x, pos.y);
+                    var len = Math.sqrt(dir.x * dir.x + dir.y * dir.y);
+                    dir.x /= len; dir.y /= len;
+                    particles.add(canvas.width / 2 + pos.x, canvas.height / 2 - pos.y, dir.x * settings.particles.velocity, -dir.y * settings.particles.velocity);
+                }
+                particles.update(dt); particles.draw(context, image);
+            }
+            canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+            render();
+        }
+    </script>
+</body>
+</html>
