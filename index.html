@@ -107,9 +107,17 @@
     <script>
         /* --- CẤU HÌNH LỜI NHẮN --- */
         const lungLinhMessages = [
-            "Mong hôm nay của cậu thật đặc biệt ❤️", "Chúc cậu luôn gặp những điều khiến tim mình ấm lên", "Chúc cậu một Valentine thật ấm áp 🤍", 
-            "Valentine ngọt ngào", "Xinh đẹp nhất", "Chúc cậu luôn được yêu thương thật nhiều", 
-            "Chúc cậu tìm thấy sự bình yên giữa những điều ồn ào 🌹", "💖", "❤️", "💗", "💕", "🌸", "🌷","💖","💕","💝"
+            "Valentine vui vẻ",
+            "T vẫn thích cậu",
+            "Luôn thật hạnh phúc",
+            "Một ngày ấm áp",
+            "Cười nhiều nhé",
+            "Luôn được yêu thương",
+            "Bình yên nha",
+            "Ngày thật trọn vẹn",
+            "Mong cậu an vui",
+            "Thật nhiều niềm vui",
+            "Giữ mãi nụ cười", "💖", "❤️", "💗", "💕", "🌸", "🌷","💖","💕","💝"
         ];
 
         let fireworksRunning = true;
@@ -128,7 +136,7 @@
             item.style.left = posX + "vw";
             item.style.top = "-100px"; // Xuất hiện từ ngoài màn hình trên
             item.style.fontSize = (Math.random() * 10 + 16) + "px";
-            item.style.animationDuration = (Math.random() * 3 + 6) + "s"; // Tốc độ rơi ngẫu nhiên 6-9s
+            item.style.animationDuration = (Math.random() * 4 + 8) + "s"; // Tốc độ rơi ngẫu nhiên 6-9s
             
             document.body.appendChild(item);
             setTimeout(() => item.remove(), 9000); // Xóa khỏi bộ nhớ sau khi rơi xong
