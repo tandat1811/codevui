@@ -3,19 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <title>Valentine 2026 - Sweet Love</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&display=swap" rel="stylesheet">
     <style>
         /* --- PHẦN 1: GIAO DIỆN CƠ BẢN --- */
         body {
             margin: 0;
             padding: 0;
-            background: #000000; /* Màu nền đỏ thẫm lúc mới mở */
+            background: #000000; 
             overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            font-family: 'Segoe UI', cursive, sans-serif;
-            transition: background 2s; /* Hiệu ứng đổi màu nền mượt mà */
+            /* Đã cập nhật phông chữ Montserrat tại đây */
+            font-family: 'Montserrat', sans-serif;
+            transition: background 2s;
         }
 
         canvas {
@@ -25,8 +27,8 @@
             width: 100%;
             height: 100%;
         }
-        #fireworks-canvas { z-index: 1; } /* Pháo hoa nằm dưới */
-        #pinkboard { z-index: 2; }       /* Trái tim hạt nằm trên */
+        #fireworks-canvas { z-index: 1; }
+        #pinkboard { z-index: 2; }
 
         /* --- PHẦN 2: MÀN HÌNH CHÀO (WELCOME) --- */
         #welcome-screen {
@@ -57,29 +59,28 @@
         /* --- PHẦN 3: HIỆU ỨNG RƠI (CHỮ & TIM) --- */
         .falling-item {
             position: absolute;
-            color: #f0b0b0; /* Màu chữ trắng cho nổi bật trên nền tối */
+            color: #f0b0b0; 
             font-weight: bold;
             white-space: nowrap;
             pointer-events: none;
             z-index: 5;
             text-shadow: 0 0 10px rgba(255, 105, 180, 0.8);
-            animation: fallAndFade 8s linear forwards; /* Thời gian rơi 8 giây */
+            animation: fallAndFade 8s linear forwards; 
         }
 
         @keyframes fallAndFade {
             0% { 
-                transform: translateY(-150px) rotate(0deg); /* Bắt đầu từ rất cao (-150px) */
+                transform: translateY(-150px) rotate(0deg); 
                 opacity: 0; 
             }
             15% { opacity: 1; }
             85% { opacity: 1; }
             100% { 
-                transform: translateY(110vh) rotate(20deg); /* Rơi quá hẳn màn hình dưới */
+                transform: translateY(110vh) rotate(20deg); 
                 opacity: 0; 
             }
         }
 
-        /* Số đếm ngược */
         #timer {
             color: #ffb6c1;
             font-size: 120px;
@@ -88,6 +89,17 @@
             display: none;
             text-shadow: 0 0 30px #ff1493;
             position: absolute;
+        }
+
+        /* Tối ưu hiển thị cho điện thoại */
+        @media screen and (max-width: 600px) {
+            .falling-item {
+                font-size: 18px !important; /* Làm chữ rơi to hơn trên điện thoại */
+                font-weight: 800; /* Làm chữ đậm hơn để dễ đọc */
+            }
+            #welcome-screen h1 {
+                font-size: 2.2rem !important; /* Thu nhỏ tiêu đề để không bị tràn dòng */
+            }
         }
     </style>
 </head>
@@ -105,19 +117,12 @@
     <div id="timer">3</div>
 
     <script>
-        /* --- CẤU HÌNH LỜI NHẮN --- */
+        /* --- CẤU HÌNH LỜI NHẮN (GIỮ NGUYÊN) --- */
         const lungLinhMessages = [
-            "Valentine vui vẻ",
-            "T vẫn thích cậu",
-            "Luôn thật hạnh phúc",
-            "Một ngày ấm áp",
-            "Cười nhiều nhé",
-            "Luôn được yêu thương",
-            "Bình yên nha",
-            "Ngày thật trọn vẹn",
-            "Mong cậu an vui",
-            "Thật nhiều niềm vui",
-            "Giữ mãi nụ cười", "💖", "❤️", "💗", "💕", "🌸", "🌷","💖","💕","💝"
+            "Valentine vui vẻ", "T vẫn thích cậu", "Luôn thật hạnh phúc",
+            "Một ngày ấm áp", "Cười nhiều nhé", "Luôn được yêu thương",
+            "Bình yên nha", "Ngày thật trọn vẹn", "Mong cậu an vui",
+            "Thật nhiều niềm vui", "Giữ mãi nụ cười", "💖", "❤️", "💗", "💕", "🌸", "🌷","💖","💕","💝"
         ];
 
         let fireworksRunning = true;
@@ -129,20 +134,20 @@
             item.className = 'falling-item';
             item.innerText = lungLinhMessages[Math.floor(Math.random() * lungLinhMessages.length)];
             
-            // Random vị trí ngang (né bớt giữa màn hình để thấy trái tim lớn)
             let posX = Math.random() * 100;
             if (posX > 40 && posX < 60) posX += (Math.random() > 0.5 ? 20 : -20);
             
             item.style.left = posX + "vw";
-            item.style.top = "-100px"; // Xuất hiện từ ngoài màn hình trên
+            item.style.top = "-100px"; 
             item.style.fontSize = (Math.random() * 10 + 16) + "px";
-            item.style.animationDuration = (Math.random() * 4 + 8) + "s"; // Tốc độ rơi ngẫu nhiên 6-9s
+            // Giữ tốc độ rơi chậm lãng mạn
+            item.style.animationDuration = (Math.random() * 4 + 8) + "s";
             
             document.body.appendChild(item);
-            setTimeout(() => item.remove(), 9000); // Xóa khỏi bộ nhớ sau khi rơi xong
+            setTimeout(() => item.remove(), 12000); 
         }
 
-        /* --- PHẦN 5: HIỆU ỨNG PHÁO HOA LÚC ĐẦU --- */
+        /* --- PHẦN 5: HIỆU ỨNG PHÁO HOA --- */
         const fwCanvas = document.getElementById('fireworks-canvas');
         const fwCtx = fwCanvas.getContext('2d');
         let fireworks = [], fwParticles = [];
@@ -185,13 +190,13 @@
         }
         loopFw();
 
-        /* --- PHẦN 6: LOGIC BẤM NÚT & CHUYỂN CẢNH --- */
+        /* --- PHẦN 6: CHUYỂN CẢNH --- */
         const startBtn = document.getElementById('start-btn');
         const welcomeScreen = document.getElementById('welcome-screen');
         const timerDiv = document.getElementById('timer');
 
         startBtn.addEventListener('click', () => {
-            document.body.style.background = "#000000"; // Đổi nền sang đen tuyền khi hiện trái tim
+            document.body.style.background = "#000000"; 
             welcomeScreen.style.opacity = '0';
             setTimeout(() => { welcomeScreen.style.display = 'none'; startCountdown(); }, 1000);
         });
@@ -207,13 +212,12 @@
                     timerDiv.style.display = 'none';
                     fireworksRunning = false;
                     initHeart();
-                    // MẬT ĐỘ RƠI: Cứ 200ms (0.2 giây) tạo 1 item rơi
                     setInterval(createFallingElements, 200);
                 }
             }, 1000);
         }
 
-        /* --- PHẦN 7: TRÁI TIM HẠT (HỒNG NHẸ) --- */
+        /* --- PHẦN 7: TRÁI TIM LỚN (HỒNG NHẸ) --- */
         var settings = { particles: { length: 800, duration: 2, velocity: 100, effect: -0.75, size: 30 } };
         var Point = (function() { function Point(x, y) { this.x = x||0; this.y = y||0; } return Point; })();
         var Particle = (function() {
@@ -250,8 +254,8 @@
                 context.beginPath(); var t = -Math.PI; var p = to(t); context.moveTo(p.x, p.y);
                 while (t < Math.PI) { t += 0.01; p = to(t); context.lineTo(p.x, p.y); }
                 context.closePath(); 
-                /* ĐỔI MÀU TRÁI TIM LỚN TẠI ĐÂY */
-                context.fillStyle = '#FFB6C1'; // Hồng nhẹ (Light Pink)
+                /* MÀU HỒNG NHẸ TRÁI TIM LỚN (GIỮ NGUYÊN) */
+                context.fillStyle = '#FFB6C1';
                 context.fill();
                 var img = new Image(); img.src = canvas.toDataURL(); return img;
             })();
