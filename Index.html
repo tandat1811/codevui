@@ -167,6 +167,216 @@
             color: #d63384;
         }
         
+        .ai-tools-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .ai-tool-link {
+            background: white;
+            border: 2px solid #667eea;
+            padding: 15px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: #333;
+            transition: all 0.3s ease;
+            text-align: center;
+            cursor: pointer;
+        }
+        
+        .ai-tool-link:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(102, 126, 234, 0.3);
+        }
+        
+        .ai-tool-link strong {
+            display: block;
+            font-size: 1.1em;
+            margin-bottom: 5px;
+        }
+        
+        .ai-tool-link small {
+            display: block;
+            font-size: 0.85em;
+            opacity: 0.8;
+        }
+        
+        .chatbot-container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            max-width: 100%;
+            height: 500px;
+            margin: 20px 0;
+        }
+        
+        .chatbot-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            background: #f9f9f9;
+        }
+        
+        .message {
+            margin-bottom: 15px;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .message.user {
+            text-align: right;
+        }
+        
+        .message.user .text {
+            background: #667eea;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 15px 15px 0 15px;
+            display: inline-block;
+            max-width: 70%;
+            word-wrap: break-word;
+        }
+        
+        .message.ai .text {
+            background: #e8e8ff;
+            color: #333;
+            padding: 10px 15px;
+            border-radius: 15px 15px 15px 0;
+            display: inline-block;
+            max-width: 70%;
+            word-wrap: break-word;
+        }
+        
+        .chatbot-input-area {
+            padding: 15px;
+            border-top: 1px solid #eee;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .chatbot-input-area input {
+            flex: 1;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            font-size: 0.95em;
+        }
+        
+        .chatbot-input-area input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 5px rgba(102, 126, 234, 0.3);
+        }
+        
+        .chatbot-input-area button {
+            padding: 10px 20px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+        
+        .chatbot-input-area button:hover {
+            background: #764ba2;
+            transform: scale(1.05);
+        }
+        
+        .ai-intro {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        
+        .chatbots-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .chatbot-box {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .chatbot-header {
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+        }
+        
+        .chatbot-messages2 {
+            flex: 1;
+            overflow-y: auto;
+            height: 300px;
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        
+        .chatbot-input-area2 {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .chatbot-input-area2 input {
+            flex: 1;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 15px;
+            font-size: 0.9em;
+        }
+        
+        .chatbot-input-area2 input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 5px rgba(102, 126, 234, 0.3);
+        }
+        
+        .chatbot-input-area2 button {
+            padding: 8px 15px;
+            background: #764ba2;
+            color: white;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9em;
+        }
+        
+        .chatbot-input-area2 button:hover {
+            background: #667eea;
+            transform: scale(1.05);
+        }
+        
         @media (max-width: 768px) {
             header h1 {
                 font-size: 1.8em;
@@ -174,6 +384,11 @@
             
             .section {
                 padding: 20px;
+            }
+            
+            .message.user .text,
+            .message.ai .text {
+                max-width: 90%;
             }
         }
     </style>
@@ -219,6 +434,42 @@
                     <h4>🔍 AI Nhận Diện</h4>
                     <p>Phân tích hình ảnh, video, giọng nói</p>
                 </div>
+            </div>
+            
+            <h3>🔗 Các Công Cụ AI Phổ Biến</h3>
+            <div class="ai-tools-links">
+                <a href="https://openai.com/chatgpt" target="_blank" class="ai-tool-link">
+                    <strong>ChatGPT</strong>
+                    <small>Trợ lý AI mạnh mẽ</small>
+                </a>
+                <a href="https://claude.ai" target="_blank" class="ai-tool-link">
+                    <strong>Claude</strong>
+                    <small>AI suy luận cấp cao</small>
+                </a>
+                <a href="https://github.com/features/copilot" target="_blank" class="ai-tool-link">
+                    <strong>GitHub Copilot</strong>
+                    <small>Trợ lý lập trình</small>
+                </a>
+                <a href="https://www.midjourney.com" target="_blank" class="ai-tool-link">
+                    <strong>Midjourney</strong>
+                    <small>Tạo hình ảnh AI</small>
+                </a>
+                <a href="https://openai.com/dall-e" target="_blank" class="ai-tool-link">
+                    <strong>DALL-E</strong>
+                    <small>Tạo hình ảnh từ văn bản</small>
+                </a>
+                <a href="https://www.microsoft.com/copilot" target="_blank" class="ai-tool-link">
+                    <strong>Microsoft Copilot</strong>
+                    <small>AI toàn năng của Microsoft</small>
+                </a>
+                <a href="https://gemini.google.com" target="_blank" class="ai-tool-link">
+                    <strong>Google Gemini</strong>
+                    <small>AI multimodal của Google</small>
+                </a>
+                <a href="https://www.anthropic.com" target="_blank" class="ai-tool-link">
+                    <strong>Xem thêm...</strong>
+                    <small>Khám phá các công cụ khác</small>
+                </a>
             </div>
         </div>
         
@@ -351,9 +602,45 @@
             <p>Thực hành thường xuyên, tìm hiểu các kỹ thuật prompt tốt nhất, và học từ những người khác. Có nhiều khóa học online miễn phí về chủ đề này.</p>
         </div>
         
-        <!-- Section 8: Kết Luận -->
+        <!-- Section 8: Tương Tác AI Trực Tiếp -->
         <div class="section">
-            <h2>8. Kết Luận</h2>
+            <h2>8. Thử Nghiệm AI Trực Tiếp</h2>
+            <div class="ai-intro">
+                <strong>💬 Đội Ngũ Chatbot AI Demo:</strong> Chọn chatbot phù hợp và hỏi câu hỏi của bạn!
+            </div>
+            
+            <div class="chatbots-row">
+                <!-- Chatbot 1: AI Tổng Quát -->
+                <div class="chatbot-box">
+                    <div class="chatbot-header">🤖 AI Assistant (Tổng Quát)</div>
+                    <div class="chatbot-container">
+                        <div class="chatbot-messages" id="chatMessages">
+                            <div class="message ai">
+                                <div class="text">👋 Xin chào! Tôi là AI Assistant chung. Hỏi tôi bất kỳ câu hỏi nào về AI!</div>
+                            </div>
+                        </div>
+                        <div class="chatbot-input-area">
+                            <input type="text" id="chatInput" placeholder="Nhập câu hỏi..." />
+                            <button onclick="sendMessage()">Gửi</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Chatbot 2: Code Assistant AI -->
+                <div class="chatbot-box">
+                    <div class="chatbot-header">💻 Code Assistant AI</div>
+                    <div class="chatbot-messages" id="chatMessages2"></div>
+                    <div class="chatbot-input-area2">
+                        <input type="text" id="codeInput" placeholder="Hỏi về lập trình..." />
+                        <button onclick="sendCodeMessage()">Gửi</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Section 9: Kết Luận -->
+        <div class="section">
+            <h2>9. Kết Luận</h2>
             <p>AI là một công nghệ mạnh mẽ có khả năng thay đổi cách chúng ta làm việc và sống. Bằng cách học cách sử dụng nó một cách hiệu quả và có trách nhiệm, bạn có thể tận dụng lợi ích của nó để:</p>
             
             <ul class="content-list">
@@ -370,8 +657,163 @@
     </div>
     
     <footer>
-        <p>&copy; 2026 Hướng Dẫn Sử Dụng AI | Tạo bởi Copilot</p>
+        <p>&copy; 2026 Hướng Dẫn Sử Dụng AI | Tạo bởi Nhóm 6</p>
         <p>Cập nhật lần cuối: Tháng 2, 2026 | Tất cả các quyền được bảo lưu</p>
     </footer>
+    
+    <script>
+        // Cơ sở dữ liệu trả lời đơn giản cho Chatbot
+        const aiResponses = {
+            'ai là gì': 'AI (Trí Tuệ Nhân Tạo) là những hệ thống máy tính được lập trình để học hỏi và thực hiện các nhiệm vụ mà thông thường yêu cầu trí thông minh của con người.',
+            'chatgpt là gì': 'ChatGPT là một chatbot AI được tạo bởi OpenAI. Nó có thể trả lời câu hỏi, viết text, lập trình, và nhiều công việc khác.',
+            'tiêu chí để hỏi ai tốt': 'Hỏi rõ ràng, cụ thể, cung cấp ngữ cảnh, kiểm tra kết quả, và sử dụng prompt template cho các công việc lặp lại.',
+            'an toàn khi sử dụng ai': 'Không chia sẻ thông tin cá nhân, kiểm tra kết quả quan trọng, không vi phạm bản quyền, và suy nghĩ về đạo lý.',
+            'ai có thể thay thế người không': 'Không hoàn toàn. AI là công cụ để hỗ trợ và nâng cao khả năng của con người, không phải thay thế.',
+            'cách bắt đầu sử dụng ai': 'Bước 1: Chọn công cụ phù hợp. Bước 2: Đăng ký tài khoản. Bước 3: Làm quen với giao diện. Bước 4: Bắt đầu sử dụng!',
+            'lợi ích của ai': 'Tăng hiệu suất, tiết kiệm thời gian, cải thiện chất lượng kết quả, và khám phá những khả năng mới.',
+            'ứng dụng ai trong công việc': 'Viết email, phân tích dữ liệu kinh doanh, lập kế hoạch, và tổ chức công việc hiệu quả hơn.',
+            'mẹo sử dụng ai': 'Hỏi rõ ràng và cụ thể, cung cấp ngữ cảnh, kiểm tra kết quả, tạo prompt template, và thực hành thường xuyên.',
+            'hello': 'Xin chào! Tôi là AI Assistant. Hỏi tôi bất kỳ câu hỏi nào về AI!',
+            'xin chào': 'Xin chào! Tôi sẵn sàng giúp bạn. Hỏi tôi về AI nhé!',
+            'cảm ơn': 'Không có gì! Rất vui được giúp bạn. Còn câu hỏi nào không?',
+            'tạm biệt': 'Tạm biệt! Hy vọng bạn học được điều gì đó hữu ích. Hẹn gặp lại!',
+        };
+        
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            
+            if (message === '') return;
+            
+            // Hiển thị tin nhắn người dùng
+            displayMessage(message, 'user');
+            input.value = '';
+            
+            // Mô phỏng AI trả lời (với độ trễ nhỏ)
+            setTimeout(() => {
+                const response = getAIResponse(message);
+                displayMessage(response, 'ai');
+            }, 500);
+        }
+        
+        function displayMessage(text, sender) {
+            const messagesDiv = document.getElementById('chatMessages');
+            const messageElement = document.createElement('div');
+            messageElement.className = `message ${sender}`;
+            messageElement.innerHTML = `<div class="text">${text}</div>`;
+            messagesDiv.appendChild(messageElement);
+            
+            // Tự động scroll xuống
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+        
+        function getAIResponse(message) {
+            const lowerMessage = message.toLowerCase();
+            
+            // Tìm kiếm trì hoãn
+            for (let key in aiResponses) {
+                if (lowerMessage.includes(key)) {
+                    return aiResponses[key];
+                }
+            }
+            
+            // Phản hồi mặc định
+            const defaultResponses = [
+                '🤔 Đây là một câu hỏi hay! Hãy kiểm tra phần hướng dẫn trên trang để tìm thêm thông tin.',
+                '💡 Tôi không chắc về điều đó. Bạn có thể thử nhập câu hỏi khác hoặc truy cập các công cụ AI chính thức.',
+                '📚 Đó là một chủ đề thú vị! Tôi khuyên bạn nên tìm hiểu thêm trong phần hướng dẫn.\n\nCác câu hỏi mẹng tôi có thể trả lời: "AI là gì", "ChatGPT là gì", "cách bắt đầu sử dụng AI", v.v.',
+                '✨ Câu hỏi tốt! Bạn có muốn hỏi về: "lợi ích của AI", "an toàn khi sử dụng AI", hoặc "ứng dụng AI trong công việc"?',
+            ];
+            
+            return defaultResponses[Math.floor(Math.random() * defaultResponses.length)];
+        }
+        
+        // Cho phép gửi tin nhắn bằng phím Enter
+        document.getElementById('chatInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+        
+        // ========== CHATBOT 2: CODE ASSISTANT AI ==========
+        const codeResponses = {
+            'javascript là gì': 'JavaScript là ngôn ngữ lập trình được thiết kế để chạy trên trình duyệt. Nó có thể tương tác với HTML và CSS để tạo các ứng dụng web động.',
+            'python là gì': 'Python là ngôn ngữ lập trình dễ học, mạnh mẽ. Nó được sử dụng rộng rãi trong AI, Data Science, web development và automation.',
+            'html css là gì': 'HTML được dùng để tạo cấu trúc trang web, CSS được dùng để tạo kiểu dáng (màu, bố cục, font). JavaScript thêm tính tương tác.',
+            'angular react vue là gì': 'Đây là 3 framework JavaScript phổ biến. Angular - enterprise, React - Facebook, Vue - nhẹ và dễ học.',
+            'api là gì': 'API (Application Programming Interface) cho phép các ứng dụng giao tiếp với nhau. Ví dụ: lấy dữ liệu từ server bằng API call.',
+            'database là gì': 'Database là nơi lưu trữ dữ liệu. Có 2 loại chính: SQL (cấu trúc) và NoSQL (linh hoạt).',
+            'git là gì': 'Git là công cụ kiểm soát phiên bản. Nó giúp bạn theo dõi thay đổi code và hợp tác với các lập trình viên khác.',
+            'nodejs là gì': 'Node.js cho phép chạy JavaScript trên server. Nó rất phổ biến cho backend development.',
+            'framework là gì': 'Framework là tập hợp các tools và libraries giúp phát triển ứng dụng nhanh hơn. Ví dụ: Django, Flask, Express.',
+            'xin chào': 'Xin chào! Tôi là Code Assistant. Hỏi tôi về lập trình, web development, hoặc ngôn ngữ lập trình!',
+            'hello': 'Hello! I am Code Assistant. Ask me about programming, coding, or web development!',
+            'cảm ơn': 'Vui lòng! Có câu hỏi lập trình nào khác không?',
+        };
+        
+        function sendCodeMessage() {
+            const input = document.getElementById('codeInput');
+            const message = input.value.trim();
+            
+            if (message === '') return;
+            
+            // Hiển thị tin nhắn người dùng
+            displayCodeMessage(message, 'user');
+            input.value = '';
+            
+            // Mô phỏng Code AI trả lời
+            setTimeout(() => {
+                const response = getCodeResponse(message);
+                displayCodeMessage(response, 'ai');
+            }, 600);
+        }
+        
+        function displayCodeMessage(text, sender) {
+            const messagesDiv = document.getElementById('chatMessages2');
+            const messageElement = document.createElement('div');
+            messageElement.className = 'message ' + sender;
+            messageElement.innerHTML = '<div class="text">' + text + '</div>';
+            messagesDiv.appendChild(messageElement);
+            
+            // Tự động scroll xuống
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+        
+        function getCodeResponse(message) {
+            const lowerMessage = message.toLowerCase();
+            
+            // Tìm kiếm response trong database
+            for (let key in codeResponses) {
+                if (lowerMessage.includes(key)) {
+                    return codeResponses[key];
+                }
+            }
+            
+            // Phản hồi mặc định cho Code Assistant
+            const codeDefaultResponses = [
+                '💻 Câu hỏi hay về lập trình! Bạn có thể tìm hiểu thêm từ các nền tảng học như Codecademy, FreeCodeCamp, hoặc W3Schools.',
+                '🔧 Đó là một chủ đề lập trình thú vị! Tôi khuyên bạn nên thực hành bằng cách viết code và xây dựng dự án.',
+                '📝 Bạn có muốn hỏi về: "JavaScript", "Python", "Git", "React", "API", "Database" hoặc ngôn ngữ/tool khác không?',
+                '💡 Tôi có thể giúp bạn tìm hiểu về: CSS, HTML, Backend, Frontend, Framework, Libraries, v.v.',
+                '✅ Cách tốt nhất để học lập trình là code cùng lúc! Bạn đang học ngôn ngữ nào?',
+            ];
+            
+            return codeDefaultResponses[Math.floor(Math.random() * codeDefaultResponses.length)];
+        }
+        
+        // Cho phép gửi tin nhắn Code Assistant bằng phím Enter
+        document.getElementById('codeInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendCodeMessage();
+            }
+        });
+        
+        // Khởi tạo chatbot thứ 2 với tin nhắn chào
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                displayCodeMessage('👨‍💻 Xin chào! Tôi là Code Assistant. Hỏi tôi về lập trình, JavaScript, Python, v.v.!', 'ai');
+            }, 800);
+        });
+    </script>
 </body>
 </html>
