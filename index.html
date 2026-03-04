@@ -81,6 +81,7 @@
         <p>Hệ thống ôn tập câu hỏi theo chương</p>
     </header>
 
+<<<<<<< HEAD
     <div class="dashboard">
         <div class="stat-item">
             <span class="stat-label">Tổng câu hỏi</span>
@@ -445,5 +446,156 @@ Answer: B
     });
 </script>
 
+=======
+<nav>
+<ul>
+  <li><a href="#intro">Giới thiệu</a></li>
+  <li><a href="#program">Chương trình</a></li>
+  <li><a href="#ai">Lĩnh vực AI</a></li>
+  <li><a href="#chat">AI hỗ trợ</a></li>
+  <li><a href="#guide">Quy định</a></li>
+  <li><a href="#contact">Liên hệ</a></li>
+</ul>
+</nav>
+
+<div class="banner">
+  <div class="banner-inner">
+    <h1>Hệ thống hỗ trợ sử dụng AI cho sinh viên</h1>
+    <p>
+      Định hướng – kiểm soát – nâng cao hiệu quả sử dụng AI trong học tập,
+      tránh lạm dụng và phụ thuộc vào công cụ trí tuệ nhân tạo.
+    </p>
+  </div>
+</div>
+
+<div class="section white" id="intro">
+<div class="section-inner">
+<h2>Giới thiệu</h2>
+<p>
+Hệ thống được xây dựng bởi sinh viên Đại học FPT, nhằm chia sẻ về việc sử dụng AI một cách
+có trách nhiệm, đúng quy định và phù hợp chuẩn đào tạo.
+</p>
+</div>
+</div>
+
+<div class="section" id="program">
+<div class="section-inner">
+<h2>Chương trình hỗ trợ</h2>
+<div class="grid">
+<div class="box">Định hướng sử dụng AI trong học tập</div>
+<div class="box">Phân tích hành vi sử dụng AI</div>
+<div class="box">Cảnh báo và hạn chế lạm dụng</div>
+</div>
+</div>
+</div>
+
+<div class="section white" id="ai">
+<div class="section-inner">
+<h2>Các lĩnh vực AI</h2>
+<div class="grid">
+<div class="box"><a href="https://chat.openai.com" target="_blank">ChatGPT – Học tập</a></div>
+<div class="box"><a href="https://github.com/features/copilot" target="_blank">Copilot – Lập trình</a></div>
+<div class="box"><a href="https://www.perplexity.ai" target="_blank">Perplexity – Nghiên cứu</a></div>
+<div class="box"><a href="https://www.canva.com/ai" target="_blank">Canva AI – Thiết kế</a></div>
+</div>
+</div>
+</div>
+
+<div class="section" id="chat">
+<div class="section-inner">
+<h2>AI hỗ trợ sinh viên </h2>
+<div class="chat">
+<div class="chat-box" id="chatBox">
+<div class="ai">AI: Chào bạn! Tôi là trợ lý AI. Tôi ở đây để hỗ trợ gợi ý và định hướng học tập cho bạn.</div>
+</div>
+<input id="q" placeholder="Nhập câu hỏi học tập (Ví dụ: Giải thích về AI...)">
+<button onclick="ask()">Gửi câu hỏi</button>
+</div>
+</div>
+</div>
+
+<div class="section white" id="guide">
+<div class="section-inner">
+<h2>Quy định sử dụng AI</h2>
+<p>
+Sinh viên chỉ được sử dụng AI để tham khảo, không sao chép, không gian lận
+trong học tập và kiểm tra.
+</p>
+</div>
+</div>
+
+<div class="section" id="contact">
+<div class="section-inner">
+<h2>Liên hệ</h2>
+<p>Email: support-ai@fpt.edu.vn</p>
+<p>Zalo & Messenger hỗ trợ sinh viên</p>
+</div>
+</div>
+
+<footer>
+© 2026 – Đại học FPT | Hệ thống hỗ trợ AI cho sinh viên
+</footer>
+
+<script>
+let stats={abuse:0,learn:0,guide:0};
+
+async function ask(){
+  const q=document.getElementById("q");
+  const chat=document.getElementById("chatBox");
+  const text=q.value.trim();
+  if(!text) return;
+
+  // 1. Hiển thị tin nhắn của người dùng
+  chat.innerHTML+=`<div class="user">Bạn: ${text}</div>`;
+  const userText = text.toLowerCase();
+  q.value="";
+  chat.scrollTop=chat.scrollHeight;
+
+  // 2. Kiểm tra dấu hiệu lạm dụng (Logic giữ nguyên từ file FPT của bạn)
+  const abuseWords=["làm hộ","giải giúp","viết bài","code hoàn chỉnh","cho đáp án"];
+  let isAbusing = abuseWords.some(k=>userText.includes(k));
+  
+  if(isAbusing){
+    stats.abuse++;
+  }
+
+  // 3. Gọi AI thật từ Server Node.js
+  try {
+    const res = await fetch("http://localhost:3000/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: text })
+    });
+    const data = await res.json();
+    let reply = data.reply || "AI không phản hồi.";
+
+    // Nếu lạm dụng, AI sẽ nhắc nhở thêm
+    if(isAbusing && stats.abuse >= 3){
+        reply = "⚠️ CẢNH BÁO: Bạn đang có dấu hiệu lạm dụng AI để làm hộ bài tập. \n\n" + reply;
+    }
+
+    chat.innerHTML+=`<div class="ai">AI: ${reply}</div>`;
+    
+<<<<<<< HEAD:Index.html
+    // 4. Đánh giá trạng thái
+    let level="Sử dụng AI hợp lý";
+    if(stats.abuse>=3) level="⚠️ Đang lạm dụng AI";
+    else if(stats.abuse>=1) level="Có xu hướng phụ thuộc AI";
+
+    chat.innerHTML+=`<div class="ai" style="font-size:0.8em; opacity:0.8"><strong>Hệ thống đánh giá:</strong> ${level}</div>`;
+
+  } catch (e) {
+    chat.innerHTML+=`<div class="ai" style="color:red">❌ Lỗi: Không thể kết nối với Server AI Offline. Hãy chắc chắn bạn đã chạy lệnh 'node server.js' trong PowerShell.</div>`;
+  }
+
+  chat.scrollTop=chat.scrollHeight;
+}
+
+// Cho phép nhấn Enter để gửi
+document.getElementById('q').addEventListener('keypress', (e) => {
+    if(e.key === 'Enter') ask();
+});
+</script>
+>>>>>>> e75515cae3afb32d95b09be69fde5ba723245322
 </body>
 </html>
