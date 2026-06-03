@@ -81,7 +81,7 @@
         <p>Hệ thống ôn tập câu hỏi theo chương</p>
     </header>
 
-    
+
     <div class="dashboard">
         <div class="stat-item">
             <span class="stat-label">Tổng câu hỏi</span>
@@ -111,6 +111,11 @@ Answer: B
 </pre>
         <textarea id="bulk-input" rows="8" style="width:100%; padding:8px;"></textarea>
         <button id="bulk-submit" style="margin-top:10px; padding:10px 20px; font-size:16px;">Nhập</button>
+
+        <button onclick="clearAllQuestions()" style="margin-top:10px;padding:10px 20px;font-size:16px;background:#e74c3c;color:white;border:none;border-radius:5px;cursor:pointer;">
+            🗑️ Xóa toàn bộ câu hỏi
+        </button>
+
     </div>
 
     <div class="quiz-card" id="add-card">
@@ -188,6 +193,7 @@ Answer: B
         });
     }
 
+
     // load stored questions from URL if present
     function loadFromUrl() {
         const params = new URLSearchParams(window.location.search);
@@ -241,6 +247,9 @@ Answer: B
         }
     }
 
+    window.addEventListener('beforeunload', () => {
+  saveToStorage();
+}  );
     // edit-related helpers
     function enterEditMode(index) {
         const q = questions[index];
@@ -380,6 +389,20 @@ Answer: B
         document.getElementById('bulk-input').value = '';
         localStorage.removeItem('bulk-input');
     }
+
+    
+    function clearAllQuestions() {
+        if (confirm('Bạn có chắc muốn xóa toàn bộ câu hỏi?')) {
+            questions = [];
+            localStorage.removeItem('questions');
+            document.getElementById('quiz-content').innerHTML = '';
+            completed = 0;
+            correctCount = 0;
+            updateDashboard();
+            initQuiz();
+        }
+    }
+
 
     // 3. LOGIC KIỂM TRA ĐÚNG SAI
     function handleCheck(btn, selected, correct, groupIdx) {
